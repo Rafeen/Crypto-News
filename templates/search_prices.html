@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {#      Price Jumbotron Start     #}
+    <div class="jumbotron">
+        {% if message  %}
+            <h3>{{ message }}</h3>
+        {% else %}
+            {% if crypto.Response %}
+                <h6>Sorry <strong>{{ quotes }}</strong> does not exist. Pleas Try Again...</h6>
+            {% else %}
+                <h5>Price Search Result for:</h5>
+                <h1 class=display-4">{{quotes}}</h1>
+            {% endif %}
+        {% endif %}
+    </div>
+    {#      Price Jumbotron end     #}
+
+    {% if not message  %}
+
+        {#      Crypto Price Table Start     #}
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Crypto</th>
+                <th scope="col">USD</th>
+                <th scope="col">BDT</th>
+                <th scope="col">24h High</th>
+                <th scope="col">24h Low</th>
+                <th scope="col">Market Cap</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key,value in crypto.DISPLAY.items %}
+                <tr>
+                    <td>{{key}}</td>
+                    <td>{{ value.USD.PRICE }}</td>
+                    <td>{{ value.BDT.PRICE }}</td>
+                    <td>{{ value.USD.HIGHDAY }}</td>
+                    <td>{{ value.USD.LOWDAY }}</td>
+                    <td>{{ value.USD.MKTCAP }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {#      Crypto Price Table End     #}
+    {% endif %}
+
+{% endblock %}
